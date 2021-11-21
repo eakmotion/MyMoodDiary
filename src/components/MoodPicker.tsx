@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useCallback } from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { MoodOptionType } from '../types';
 import { theme } from '../theme';
@@ -11,8 +11,19 @@ const moodOptions: MoodOptionType[] = [
   { emoji: '🥳', description: 'celebratory' },
 ];
 
-export const MoodPicker: FC = () => {
+type MoodPickerProps = {
+  onSelect: (mood: MoodOptionType) => void;
+};
+
+export const MoodPicker: FC<MoodPickerProps> = ({ onSelect }) => {
   const [selectedMood, setSelectedMood] = useState<MoodOptionType>();
+
+  const handleSelect = useCallback(() => {
+    if (selectedMood) {
+      onSelect(selectedMood);
+      setSelectedMood(undefined);
+    }
+  }, [onSelect, selectedMood]);
 
   return (
     <View style={styles.container}>
@@ -37,7 +48,7 @@ export const MoodPicker: FC = () => {
           </View>
         ))}
       </View>
-      <Pressable style={styles.button}>
+      <Pressable style={styles.button} onPress={handleSelect}>
         <Text style={styles.buttonText}>Choose</Text>
       </Pressable>
     </View>
