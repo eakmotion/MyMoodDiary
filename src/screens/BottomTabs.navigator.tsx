@@ -14,7 +14,7 @@ export const BottomTabsNavigator: FC = () => {
       screenOptions={({ route }) => ({
         tabBarActiveTintColor: theme.colorBlue,
         tabBarInactiveTintColor: theme.colorGrey,
-        tabBarShowLabel: false,
+        tabBarShowLabel: true,
         tabBarIcon: ({ color, size }) => {
           if (route.name === 'Home') {
             return <HomeIcon color={color} size={size} />;
@@ -31,9 +31,21 @@ export const BottomTabsNavigator: FC = () => {
           return null;
         },
       })}>
-      <BottomTabs.Screen name="Home" component={Home} />
-      <BottomTabs.Screen name="History" component={History} />
-      <BottomTabs.Screen name="Stats" component={Stats} />
+      <BottomTabs.Screen
+        name="Home"
+        component={Home}
+        options={{ title: "Today's Mood" }}
+      />
+      <BottomTabs.Screen
+        name="History"
+        component={History}
+        options={{ title: 'Mood History' }}
+      />
+      <BottomTabs.Screen
+        name="Stats"
+        component={Stats}
+        options={{ title: 'Mood Insights' }}
+      />
     </BottomTabs.Navigator>
   );
 };
